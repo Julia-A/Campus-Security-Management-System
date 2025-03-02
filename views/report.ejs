@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+<div class="body">
+  <!-- Sidebar -->
+  <%- include('partials/sidebar') %>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="report-incident">
+      <h1 class="">Report an Incident</h1>
+
+      <form action="/report" method="POST" enctype="multipart/form-data" class="">
+        <!-- Description -->
+        <div class="incident-description">
+          <label for="description" class="">Incident Description</label>
+          <textarea name="description" id="description" class="transition" required></textarea>
+        </div>
+
+        <!-- Auto-Categorization Preview -->
+        <div class="incident-categorization">
+          <label class="">Detected Category</label>
+          <input type="text" id="category" name="category" readonly class="">
+        </div>
+
+        <!-- Upload Image -->
+        <div class="incident-image">
+          <label for="image" class="">Upload Image (Optional)</label>
+          <input type="file" name="image" id="image" class=" transition">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="submit-report">
+          Submit Report
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("description").addEventListener("input", function () {
+    let desc = this.value.toLowerCase();
+    let category = "Other";
+
+    if (desc.includes("stole") || desc.includes("robbery") || desc.includes("theft") || desc.includes("steal")) {
+      category = "Theft";
+    } else if (desc.includes("assault") || desc.includes("attack") || desc.includes("violence") || desc.includes("fight")) {
+      category = "Assault";
+    } else if (desc.includes("suspicious") || desc.includes("strange") || desc.includes("unknown person")) {
+      category = "Suspicious Activity";
+    }
+
+    document.getElementById("category").value = category;
+  });
+</script>
+
+<%- include('partials/footer') %>

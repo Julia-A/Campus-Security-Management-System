@@ -1,0 +1,117 @@
+  /* Home Page */
+  
+  
+  .hero {
+    /* min-height: 100vh; */
+    background: linear-gradient(180deg, rgba(102, 100, 100, 0.774), rgba(11, 10, 83, 0.473)), url("/images/hero-img.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+    background-color: #3462cf80;
+    font-family: "Inter", serif;
+    
+    }
+
+    .hero-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 8rem;    
+    }
+
+
+    .hero-text h1 {
+        font-size: 4rem;
+        background: linear-gradient(to right,#1042B6, #071D50, #3463CF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    
+
+    .hero-text p {
+        font-size: 1.5rem;
+        color: #fff;
+        text-align: center;
+    }
+
+
+    @media(max-width:400px) {
+        .hero-text h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1rem;
+        }
+    }
+
+    .hero-btn {
+        padding: 0.5rem 1.6rem;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 500;
+        border: 2px solid #071D50;
+        background: transparent;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+      }
+
+    .hero-btn:hover {
+        background: #fff;
+        color: #071D50;
+    }
+
+    .custom-shape-divider-bottom-1740425584 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        transform: rotate(180deg);
+    }
+    
+    .custom-shape-divider-bottom-1740425584 svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 135px;
+    }
+    
+    .custom-shape-divider-bottom-1740425584 .shape-fill {
+        fill: #3462cfb6;
+    }
+
+
+
+
+    @media(max-width: 800px) {
+    .custom-shape-divider-bottom-1740425584 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        transform: rotate(180deg);
+    }
+    
+    .custom-shape-divider-bottom-1740425584 svg {
+        position: relative;
+        display: block;
+        width: calc(159% + 1.3px);
+        height: 135px;
+    }
+    
+    .custom-shape-divider-bottom-1740425584 .shape-fill {
+        fill: #FFFFFF;
+    }
+}

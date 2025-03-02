@@ -1,0 +1,77 @@
+<%- include('partials/header') %>
+
+<div class="body">
+  <%- include('partials/sidebar') %>
+
+  <main class="main">
+    <p class="welcome">Welcome, <%= user.username %>!</p>
+
+    <h2 class="title">Your Reports</h2>
+
+    <% if (reports.length > 0) { %>
+      <div class="report-card">
+        <% reports.forEach(report => { %>
+          <div class="report-card-inner-div">
+            <div class="desc-category card-text">
+              <p class="description"><strong>Description: </strong><%= report.description %></p>
+              <p class="category"><strong>Category:</strong> <%= report.category %></p>
+            </div>
+            <p class="status"><strong>Status: </strong>
+              <span class="<%= report.status === 'Pending' ? 'text-red-500' : 'text-green-500' %> font-semibold">
+                <%= report.status %>
+              </span>
+            </p>
+            <p class="date"><strong>Date:</strong> <%= report.createdAt.toLocaleString() %></p>
+            <div class="card-text">
+              <% if (report.imageUrl) { %>
+                <img src="<%= report.imageUrl %>" alt="Report Image" class="">
+              <% } %>
+              
+            </div>
+
+             <!-- Feedback Section (only if addressed) -->
+            <% if (report.status === "Addressed") { %>
+              <form action="/submit-feedback/<%= report._id %>" method="POST" class="feedback-form">
+                <label for="feedback" class="">SUBMIT FEEDBACK</label>
+                <select name="feedback" id="feedback" class="" required>
+                  <option value="">-- Select Feedback --</option>
+                  <option value="Good">Good</option>
+                  <option value="Amazing">Amazing</option>
+                  <option value="Bad">Bad</option>
+                  <option value="No Response">No Response</option>
+                  <option value="Really Bad">Really Bad</option>
+                </select>
+                
+                <button type="submit" class="submit-feedback">
+                  Submit Feedback
+                </button>
+              </form>
+            <% } %>
+
+
+                <!-- Show if deleted -->
+                <% if (report.deleted) { %>
+                  <p class="">
+                    🚨 You deleted this incident on <%= report.deletedAt ? report.deletedAt.toLocaleString() : "Unknown date" %>
+                  </p>
+                <% } else { %>
+                
+              <!-- Delete Button -->
+              <form action="/delete-incident/<%= report._id %>" method="POST" class="delete-incident-form" onsubmit="return confirm('Are you sure you want to delete this incident?');">
+                <button type="submit" class="delete-incident-btn">
+                  🗑️ Delete Incident
+                </button>                
+              
+              </form>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="no-reports-submitted">No reports submitted yet.</p>
+    <% } %>
+  </main>
+
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,66 @@
+<aside class="" id="sidebar">
+  
+  <ul class="">
+
+    <li class="logo-li">
+        <p class="nav-logo logo">CampusSecurity
+          <i class="bi bi-shield-shaded nav-logo-icon"></i>
+        </p>
+        
+
+        <button id="toggle-btn" onclick=toggleSidebar()>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M360-120v-720h80v720h-80Zm160-160v-400l200 200-200 200Z"/></svg>
+        </button>
+    </li>
+
+    <% if (user && user.role === 'student') { %>
+      <li>
+        <a href="/dashboard" class="active">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+          <span>Home</span>
+        </a>
+      </li>
+    <% } %>
+
+    <% if (user && user.role === 'student') { %>
+      <li>
+        <a href="/emergency-contacts" class="">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M410-120v-238L204-239l-70-121 206-120-206-119 70-121 206 119v-239h140v239l206-119 70 121-206 119 206 120-70 121-206-119v238H410Z"/></svg>
+          <span>Emergency Contacts</span>
+        </a>
+      </li>
+    <% } %>
+
+    <li>
+      <a href="/report" class="">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240ZM330-120 120-330v-300l210-210h300l210 210v300L630-120H330Zm34-80h232l164-164v-232L596-760H364L200-596v232l164 164Zm116-280Z"/></svg>
+        <span>Report Incident</span>
+      </a>
+    </li>
+
+    <% if (user && user.role === 'admin') { %>
+      <li>
+        <a href="/admin-dashboard" class="active">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+          <span>Home</span>
+        </a>
+      </li>
+    <% } %>
+
+    <% if (user && user.role === 'security') { %>
+      <li>
+        <a href="/security-dashboard" class="active">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+          <span>Home</span>
+        </a>
+      </li>
+    <% } %>
+
+    <li>
+      <a href="/logout" class="logout">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+</aside>

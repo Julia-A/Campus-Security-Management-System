@@ -1,0 +1,130 @@
+<%- include('partials/header') %>
+
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <%- include('partials/sidebar') %>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6 bg-gray-100">
+    <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
+
+    <!-- Stats Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white p-4 rounded shadow text-center">
+        <h2 class="text-xl font-semibold">Total Reports</h2>
+        <p class="text-3xl font-bold text-blue-600"><%= totalReports %></p>
+      </div>
+      <div class="bg-white p-4 rounded shadow text-center">
+        <h2 class="text-xl font-semibold">Pending Reports</h2>
+        <p class="text-3xl font-bold text-red-600"><%= pendingReports %></p>
+      </div>
+      <div class="bg-white p-4 rounded shadow text-center">
+        <h2 class="text-xl font-semibold">Resolved Reports</h2>
+        <p class="text-3xl font-bold text-green-600"><%= addressedReports %></p>
+      </div>
+    </div>
+
+    <!-- Reports Per User -->
+    <h2 class="text-2xl font-bold mt-6">Reports Per User</h2>
+    <table class="w-full border-collapse border border-gray-300 mt-4">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="border p-2">User Matric Number</th>
+          <th class="border p-2">Number of Reports</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reportsByUser.forEach(userReport => { %>
+          <tr class="border">
+            <td class="p-2"><%= userReport._id || 'N/A' %></td>
+            <td class="p-2"><%= userReport.count %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- Reports Per Day -->
+    <h2 class="text-2xl font-bold mt-6">Reports Per Day (Last 7 Days)</h2>
+    <table class="w-full border-collapse border border-gray-300 mt-4">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="border p-2">Date</th>
+          <th class="border p-2">Number of Reports</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reportsPerDay.forEach(dayReport => { %>
+          <tr class="border">
+            <td class="p-2"><%= dayReport._id %></td>
+            <td class="p-2"><%= dayReport.count %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- Feedback Summary -->
+    <h2 class="text-xl font-bold mt-6">Feedback Summary</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+      <% feedbackSummary.forEach(item => { %>
+        <div class="bg-white p-4 rounded shadow text-center">
+          <h3 class="text-lg font-bold"><%= item._id || 'No Feedback' %></h3>
+          <p class="text-3xl font-semibold"><%= item.count %></p>
+        </div>
+      <% }) %>
+    </div>
+
+    <!-- All Reports -->
+    <h2 class="text-2xl font-bold mt-6">All Reports</h2>
+    <% if (reports.length > 0) { %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <% reports.forEach(report => { %>
+          <div class="bg-white p-4 rounded shadow">
+            <!-- Display User Matric Number -->
+            <p class="text-gray-700"><strong>User Matric Number:</strong> 
+              <% if (report.userId && report.userId.matricNumber) { %>
+                <%= report.userId.matricNumber %>
+              <% } else { %>
+                <span class="text-red-500">N/A</span>
+              <% } %>
+            </p>
+
+            <!-- Incident Description -->
+            <p class="text-gray-700"><%= report.description %></p>
+            <p class="text-gray-700"><strong>Category:</strong> <%= report.category %></p>
+
+
+            <!-- Incident Image -->
+            <% if (report.imageUrl) { %>
+              <img src="<%= report.imageUrl %>" alt="Report Image" class="mt-2 rounded w-40">
+            <% } %>
+
+            <!-- Status -->
+            <p class="text-sm text-gray-500 mt-2">Status: 
+              <span class="font-semibold <%= report.status === 'Pending' ? 'text-red-500' : 'text-green-500' %>">
+                <%= report.status %>
+              </span>
+            </p>
+
+            <!-- Date -->
+            <p class="text-sm text-gray-500 mt-2"><%= report.createdAt.toLocaleString() %></p>
+
+            <!-- Deleted Indicator -->
+            <p class="text-sm font-semibold <%= report.deleted ? 'text-red-600' : 'text-gray-500' %> mt-2">
+              <% if (report.deleted) { %>
+                🚨 Deleted by user on <%= report.deletedAt ? report.deletedAt.toLocaleString() : "Unknown date" %>
+              <% } else { %>
+                <strong>Not yet deleted</strong> 
+                
+              <% } %>
+            </p>
+            
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="text-gray-600 mt-4">No reports found.</p>
+    <% } %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

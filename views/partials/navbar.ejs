@@ -1,0 +1,65 @@
+
+
+<nav class="nav-bar">
+  <div class="nav-container">
+    <!-- Logo -->
+    <a href="/" class="nav-logo">
+      CampusSecurity
+      <i class="bi bi-shield-shaded nav-logo-icon"></i>
+    </a>
+    
+
+    <!-- Mobile Navigation -->
+    <div class="side-nav">
+      <svg onclick="hideSidenav()" xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      <ul>
+        <li><a href="/" class="hover:text-primary transition" class="nav-item">Home</a></li>
+        <li><a href="/about" class="hover:text-primary transition" class="nav-item">About</a></li>
+        <li><a href="/services" class="hover:text-primary transition" class="nav-item">Services</a></li>
+        <li><a href="/contact" class="hover:text-primary transition" class="nav-item">Contact</a></li>
+        <!-- Authentication Buttons -->
+        <div class="nav-auth-mobile">
+          <% if (user) { %>
+            <span class="welcome-text">Welcome, <%= user.username %></span>
+            <a href="/logout" class="nav-button-mobile logout">Logout</a>
+          <% } else { %>
+            <a href="/login" class="nav-button-mobile login">Login</a>
+            <a href="/register" class="nav-button-mobile register">Register</a>
+          <% } %>
+        </div>
+      </ul>
+    </div>
+
+
+
+    <!-- Desktop Navigation -->
+    
+    <ul class="nav-links hide-on-mobile">
+      <li><a href="/" class="hover:text-primary transition" class="nav-item">Home</a></li>
+      <li><a href="/about" class="hover:text-primary transition" class="nav-item">About</a></li>
+      <li><a href="/services" class="hover:text-primary transition" class="nav-item">Services</a></li>
+      <li><a href="/contact" class="hover:text-primary transition" class="nav-item">Contact</a></li>
+    </ul>
+
+    <!-- Authentication Buttons -->
+    <div class="nav-auth hide-on-mobile">
+      <% if (user) { %>
+        <span class="welcome-text">Welcome, <%= user.username %></span>
+        <a href="/logout" class="nav-button logout">Logout</a>
+      <% } else { %>
+        <a href="/login" class="nav-button login">Login</a>
+        <a href="/register" class="nav-button register">Register</a>
+      <% } %>
+    </div>    
+
+    <svg class="menu-button" onclick="showSidenav()" xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#e8eaed"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+  </div>
+</nav>
+
+
+
+
+
+
+
+

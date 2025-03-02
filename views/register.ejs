@@ -1,0 +1,80 @@
+<%- include('partials/header') %>
+
+<div class="sign-up">
+  <div class="register-container">
+
+    
+
+    <form action="/register" method="POST" id="registerForm">
+
+      <h1 class="">Create an Account</h1>
+      <p>Already have an account?
+        <a href="/login">Log in</a>
+      </p>
+
+      <div class="row">
+        <!-- Last Name -->
+        <div class="input-wrap">
+          <input type="text" name="lastName" class="input" required>
+          <label class="">Last Name</label>
+        </div>
+    
+        <!-- First Name -->
+        <div class="input-wrap">
+          <input type="text" name="firstName" class="input" required>
+          <label class="">First Name</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Course of Study -->
+        <div class="input-wrap">
+          <input type="text" name="courseOfStudy" class="input" required>
+          <label class="">Course of Study</label>
+        </div>
+    
+        <!-- Matric Number -->
+        <div class="input-wrap">
+          <input type="text" name="matricNumber" class="input" required>
+          <label class="">Matric Number</label>
+        </div>
+      </div>
+      <!-- Email -->
+      <div class="input-wrap">
+        <input type="email" name="email" class="input" required>
+        <label class="">Email</label>
+      </div>
+      <!-- Password -->
+      <div class="input-wrap">
+        <input type="password" name="password" class="input" id="password" required>
+        <label class="">Password</label>
+      </div>
+      <small class="">Password must have at least 8 characters, including uppercase, lowercase, number, and symbol.</small>
+      <!-- Submit Button -->
+      <button type="submit" class="register-btn">
+        Register
+      </button>
+    </form>
+
+    
+    <div class="image-side">
+      <img src="../images/register-img.png" alt="">
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simple Client-Side Password Validation
+  const passwordInput = document.getElementById('password');
+  passwordInput.addEventListener('input', () => {
+    const password = passwordInput.value;
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!pattern.test(password)) {
+      passwordInput.setCustomValidity("Password must have at least 8 characters, including uppercase, lowercase, number, and symbol.");
+    } else {
+      passwordInput.setCustomValidity("");
+    }
+  });
+</script>
+
+<!-- <%- include('partials/footer') %> -->

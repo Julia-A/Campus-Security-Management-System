@@ -1,0 +1,180 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+    /* line-height: 1.5rem; */
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+
+
+
+
+/* Navigation Bar */
+
+.nav-bar {
+  font-family: "Inter", serif;
+    width: 100%;
+    padding: 2rem 5%;
+    /* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1); */
+}
+
+
+
+  /* 🔹 Navbar Container */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  /* 🔹 Logo */
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+
+  .nav-logo-icon {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-left: 5px;
+  }
+  
+  /* 🔹 Desktop Navigation */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    color: #fff;
+    background: #071D50;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 1rem 2.5rem;
+     
+  }
+  
+  /* nav li {
+    height: 50px;
+  } */
+
+  .nav-item {
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: 0.3s ease-in-out;
+    /* height: 50px; */
+  }
+  
+  nav li a:hover {
+    color: #f0f0f0;
+  }
+  
+  /* 🔹 Authentication Buttons */
+  .nav-auth {
+    display: flex;
+    gap: 15px;
+  }
+
+  .nav-auth-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-button, .nav-button-mobile {
+    padding: 0.5rem 1.6rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  .nav-button:hover {
+    background: white;
+    color: black;
+  }
+  
+  /* 🔹 Special Styles for Buttons */
+  .login {
+    border-color: #071D50;
+    color: #071D50;
+  }
+  
+  .login:hover {
+    background: #fff;
+    color: #071D50;
+  }
+  
+  .register {
+    background: #071D50;
+    border: none;
+    color: #fff;
+  }
+  
+  .register:hover {
+    background: transparent;
+  }
+  
+  .side-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 999999;
+    background-color: #ffffff42;
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1rem;
+  }
+
+  .side-nav li {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .side-nav a {
+    width: 100%;
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  @media(max-width: 800px) {
+    .hide-on-mobile {
+      display: none;
+    }
+    .menu-button {
+      display: block;
+    }
+  }
+
+  @media(max-width: 400px) {
+    .side-nav {
+      width: 100%;
+    }
+  }

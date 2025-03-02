@@ -1,0 +1,109 @@
+<%- include('partials/header') %>
+
+<!-- Hero Section -->
+<section class="hero">
+  <%- include('partials/navbar') %>
+  <div class="hero-text">
+    <h1 class="">CAMPUS SECURITY</h1>
+    <p class="">Your safety, our priority. Report incidents seamlessly.</p>
+    <a href="/report" class="hero-btn">
+      Report an Incident
+    </a>
+  </div>
+  <div class="custom-shape-divider-bottom-1740425584">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+    </svg>
+</div>
+</section>
+
+<!-- Statistics Section -->
+<section class="section-two">
+  <div class="">
+    <div class="">
+      <div>
+        <h2 class="">5K+</h2>
+        <p class="">Students Protected</p>
+      </div>
+      <div>
+        <h2 class="">4.5K</h2>
+        <p class="">Incidents Reported</p>
+      </div>
+      <div>
+        <h2 class="">99%</h2>
+        <p class="">Resolved Cases</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-20">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold">How We Ensure Your Safety</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
+      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+        <img src="/images/security-patrol.jpg" alt="Security Patrol" class="w-full rounded-md">
+        <h3 class="text-xl font-bold mt-4">24/7 Patrol</h3>
+        <p class="text-gray-600">Continuous campus surveillance by trained security personnel.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+        <img src="/images/emergency-response.jpg" alt="Emergency Response" class="w-full rounded-md">
+        <h3 class="text-xl font-bold mt-4">Emergency Response</h3>
+        <p class="text-gray-600">Immediate action taken for reported incidents.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition">
+        <img src="/images/reporting-system.jpg" alt="Incident Reporting" class="w-full rounded-md">
+        <h3 class="text-xl font-bold mt-4">Seamless Reporting</h3>
+        <p class="text-gray-600">Easy-to-use platform for reporting security concerns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-20 bg-gray-100">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold">Frequently Asked Questions</h2>
+    <div class="mt-10 max-w-2xl mx-auto">
+      <div class="bg-white p-4 rounded-lg shadow mb-4">
+        <button class="faq-btn flex justify-between w-full text-left text-lg font-semibold">
+          What types of incidents can I report?
+          <span>+</span>
+        </button>
+        <p class="faq-answer hidden mt-2 text-gray-600">You can report theft, assault, suspicious activity, and more.</p>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow mb-4">
+        <button class="faq-btn flex justify-between w-full text-left text-lg font-semibold">
+          How quickly do security personnel respond?
+          <span>+</span>
+        </button>
+        <p class="faq-answer hidden mt-2 text-gray-600">Response times vary but are usually within minutes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call-to-Action (CTA) Section -->
+<section class="py-20 bg-primary text-white text-center">
+  <div class="container mx-auto">
+    <h2 class="text-4xl font-bold">Need Help? Report Now!</h2>
+    <p class="mt-4">Don't wait—report an incident and let us handle the rest.</p>
+    <a href="/report" class="mt-6 inline-block px-6 py-3 bg-white text-primary rounded-lg text-lg shadow-md hover:bg-gray-200 transition">
+      Report an Incident
+    </a>
+  </div>
+</section>
+<div class="wavy-line"></div>
+
+<script>
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.nextElementSibling.classList.toggle('hidden');
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
