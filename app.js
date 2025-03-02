@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
 const multer = require('multer');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const nodemailer = require("nodemailer");
 
 
