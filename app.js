@@ -408,7 +408,7 @@ app.post('/register', async (req, res) => {
 
     res.redirect('/dashboard');
   } catch (error) {
-    console.error("🚨 Error during registration:", error);
+    console.error("🚨 Error during registration:", error.message);
     res.status(500).send("Server error during registration.");
   }
 });
