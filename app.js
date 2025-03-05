@@ -13,13 +13,22 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
-  connectTimeoutMS: 30000,  // 30 seconds timeout
-  socketTimeoutMS: 45000,   // 45 seconds timeout
+  connectTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+  serverSelectionTimeoutMS: 30000 
 })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .then(async () => {
+    console.log('✅ Connected to MongoDB Atlas');
+    // await createPredefinedUsers(); // Ensure users are created only after DB connection
+  })
+  .catch(err => console.error('🚨 MongoDB connection error:', err));
+
+
+
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -121,17 +130,22 @@ const Feedback = mongoose.model('Feedback', feedbackSchema);
 // Add predefined users (run this once)
 const createPredefinedUsers = async () => {
   try {
-    const adminExists = await User.findOne({ role: 'admin' });
-    const securityExists = await User.findOne({ role: 'security' });
+    console.log("🔄 Checking predefined users...");
 
+    // Ensure MongoDB is connected before running queries
+    await mongoose.connection.db.admin().ping();
+
+    // Check if admin exists
+    const adminExists = await User.findOne({ role: 'admin' });
     if (!adminExists) {
+      const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || "Admin@123", 10);
       await User.create({
-        matricNumber: "admin123", // Dummy matric number (won't be used)
+        matricNumber: "admin123",
         firstName: "Admin",
         lastName: "User",
         email: process.env.ADMIN_EMAIL || "admin@campus.com",
         courseOfStudy: "N/A",
-        password: await bcrypt.hash(process.env.ADMIN_PASSWORD || "Admin@123", 10),
+        password: hashedPassword,
         role: "admin"
       });
       console.log("✅ Admin user created");
@@ -139,24 +153,30 @@ const createPredefinedUsers = async () => {
       console.log("ℹ️ Admin user already exists");
     }
 
+    // Check if security user exists
+    const securityExists = await User.findOne({ role: 'security' });
     if (!securityExists) {
+      const hashedPassword = await bcrypt.hash(process.env.SECURITY_PASSWORD || "Security@123", 10);
       await User.create({
-        matricNumber: "security123", // Dummy matric number
+        matricNumber: "security123",
         firstName: "Security",
         lastName: "Officer",
         email: process.env.SECURITY_EMAIL || "security@campus.com",
         courseOfStudy: "N/A",
-        password: await bcrypt.hash(process.env.SECURITY_PASSWORD || "Security@123", 10),
+        password: hashedPassword,
         role: "security"
       });
       console.log("✅ Security user created");
     } else {
       console.log("ℹ️ Security user already exists");
     }
+
   } catch (error) {
     console.error("🚨 Error creating predefined users:", error);
+    setTimeout(createPredefinedUsers, 5000); // Retry after 5 seconds
   }
 };
+// createPredefinedUsers();
 
 
 
@@ -244,12 +264,16 @@ app.post('/login', async (req, res) => {
     }
 
     if (!user) {
+      const errorMsg = `🚨 User not found: ${matricNumber}\n`;
+      fs.appendFileSync('error.log', errorMsg);
       return res.status(400).send("User not found. Please check your login details.");
     }
 
     // Check password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
+      const errorMsg = `🚨 Incorrect password attempt for: ${matricNumber}\n`;
+      fs.appendFileSync('error.log', errorMsg);
       return res.status(400).send("Incorrect password. Please try again.");
     }
 
@@ -259,10 +283,19 @@ app.post('/login', async (req, res) => {
     req.session.role = user.role;
 
     console.log(`✅ Logged in: ${user.firstName} (${user.matricNumber})`);
-    res.redirect("/dashboard");
+    
+       // Redirect based on role
+       if (user.role === "admin") {
+        return res.redirect("/admin-dashboard");
+      } else if (user.role === "security") {
+        return res.redirect("/security-dashboard");
+      } else {
+        return res.redirect("/dashboard");
+      }
 
   } catch (error) {
-    console.error("🚨 Login Error:", error);
+    const errorMsg = `🚨 Login Error: ${error.message}\n`;
+    fs.appendFileSync('error.log', errorMsg);
     res.status(500).send("Server error during login.");
   }
 });
@@ -697,7 +730,7 @@ app.post('/delete-incident/:id', ensureAuthenticated, async (req, res) => {
 
 
 
-// createPredefinedUsers();
+
 
 
 
