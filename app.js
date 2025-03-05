@@ -75,6 +75,15 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+const fs = require("fs");
+
+// Ensure 'public/images/uploads/' exists
+const uploadDir = "public/images/uploads/";
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+
 const User = mongoose.model('User', userSchema);
 
 
