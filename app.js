@@ -219,13 +219,16 @@ const sendNotification = async (recipient, subject, message) => {
       from: `"Campus Security" <${process.env.EMAIL_USER}>`,
       to: recipient,
       subject,
-      text: message
+      text: message.replace(/<\/?[^>]+(>|$)/g, ""), // Convert to plain text for compatibility
+      html: message // Use HTML for better formatting
     });
-    console.log(`✅ Email sent to ${recipient}`);
+
+    console.log(`✅ Email sent to: ${recipient}`);
   } catch (error) {
     console.error(`🚨 Failed to send email to ${recipient}:`, error);
   }
 };
+
 
 
 
@@ -522,27 +525,54 @@ app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res
     await newReport.save();
 
 
-    // Fetch admin and security emails from database
-    const adminSecurityUsers = await User.find({ role: { $in: ["admin", "security"] } });
-    const adminSecurityEmails = adminSecurityUsers.map(user => user.email);
-
-    // Send email alerts
-    if (adminSecurityEmails.length > 0) {
-      const subject = "New Incident Reported on Campus";
-      const message = `
-        📢 A new incident has been reported! \n
-        🔹 **Category:** ${category} \n
-        🔹 **Description:** ${description} \n
-        🔹 **Status:** Pending \n
-        🖼️ **Image:** ${imageUrl ? `View image here: ${imageUrl}` : "No image provided"} \n
-        📅 **Time:** ${new Date().toLocaleString()} \n
-        👉 Login to view the report: [Admin Dashboard](https://yourherokuapp.com/admin-dashboard)
-      `;
-
-      await sendNotification(adminSecurityEmails.join(","), subject, message);
-      console.log(`📩 Alert sent to: ${adminSecurityEmails.join(", ")}`);
-    }
-
+    app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res) => {
+      try {
+        const { description } = req.body;
+        const imageUrl = req.file ? "/images/uploads/" + req.file.filename : null;
+    
+        // Auto-categorize based on description
+        const category = categorizeIncident(description);
+    
+        // Save the new report
+        const newReport = new Report({
+          userId: req.session.userId,
+          description,
+          category,
+          imageUrl,
+        });
+    
+        await newReport.save();
+    
+        // ✅ Fetch Admin & Security Users
+        const adminSecurityUsers = await User.find({ role: { $in: ["admin", "security"] } });
+        const adminSecurityEmails = adminSecurityUsers.map(user => user.email);
+    
+        if (adminSecurityEmails.length > 0) {
+          // ✅ Send email alert
+          const subject = "🚨 New Campus Security Incident Reported!";
+          const message = `
+            <h2>📢 A new incident has been reported!</h2>
+            <ul>
+              <li>🔹 <b>Category:</b> ${category}</li>
+              <li>🔹 <b>Description:</b> ${description}</li>
+              <li>🔹 <b>Status:</b> Pending</li>
+              ${imageUrl ? `<li>🖼️ <b>Image:</b> <a href="https://yourherokuapp.com${imageUrl}">View Image</a></li>` : ""}
+              <li>📅 <b>Time:</b> ${new Date().toLocaleString()}</li>
+            </ul>
+            <p>👉 <b>Login to view the report:</b> <a href="https://yourherokuapp.com/admin-dashboard">Admin Dashboard</a></p>
+          `;
+    
+          await sendNotification(adminSecurityEmails.join(","), subject, message);
+          console.log(`📩 Alert sent to: ${adminSecurityEmails.join(", ")}`);
+        }
+    
+        res.redirect("/dashboard");
+      } catch (error) {
+        console.error("🚨 Error submitting report:", error);
+        res.status(500).send("Error submitting report");
+      }
+    });
+    
 
     res.redirect("/dashboard");
   } catch (error) {

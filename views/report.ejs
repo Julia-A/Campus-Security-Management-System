@@ -48,6 +48,8 @@
       category = "Assault";
     } else if (desc.includes("suspicious") || desc.includes("strange") || desc.includes("unknown person")) {
       category = "Suspicious Activity";
+    } else if (desc.includes("die") || desc.includes("death")) {
+      category = "Death";
     }
 
     document.getElementById("category").value = category;
