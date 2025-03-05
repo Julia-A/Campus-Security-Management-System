@@ -143,7 +143,7 @@ const createPredefinedUsers = async () => {
         matricNumber: "admin123",
         firstName: "Admin",
         lastName: "User",
-        email: process.env.ADMIN_EMAIL || "admin@campus.com",
+        email: "juliaaderemi@gmail.com",
         courseOfStudy: "N/A",
         password: hashedPassword,
         role: "admin"
@@ -161,7 +161,7 @@ const createPredefinedUsers = async () => {
         matricNumber: "security123",
         firstName: "Security",
         lastName: "Officer",
-        email: process.env.SECURITY_EMAIL || "security@campus.com",
+        email: "aderemij1493@student.babcock.edu.ng",
         courseOfStudy: "N/A",
         password: hashedPassword,
         role: "security"
@@ -248,7 +248,7 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
-// Updated Login Route
+// Login Route
 app.post('/login', async (req, res) => {
   const { matricNumber, password } = req.body;
 
@@ -494,6 +494,7 @@ app.post('/send-emergency-message', ensureAuthenticated, async (req, res) => {
 
 
 
+// Incident Report route
 
 app.get('/report', (req, res) => {
   if (!req.session.userId) {
@@ -519,6 +520,30 @@ app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res
     });
 
     await newReport.save();
+
+
+    // Fetch admin and security emails from database
+    const adminSecurityUsers = await User.find({ role: { $in: ["admin", "security"] } });
+    const adminSecurityEmails = adminSecurityUsers.map(user => user.email);
+
+    // Send email alerts
+    if (adminSecurityEmails.length > 0) {
+      const subject = "New Incident Reported on Campus";
+      const message = `
+        📢 A new incident has been reported! \n
+        🔹 **Category:** ${category} \n
+        🔹 **Description:** ${description} \n
+        🔹 **Status:** Pending \n
+        🖼️ **Image:** ${imageUrl ? `View image here: ${imageUrl}` : "No image provided"} \n
+        📅 **Time:** ${new Date().toLocaleString()} \n
+        👉 Login to view the report: [Admin Dashboard](https://yourherokuapp.com/admin-dashboard)
+      `;
+
+      await sendNotification(adminSecurityEmails.join(","), subject, message);
+      console.log(`📩 Alert sent to: ${adminSecurityEmails.join(", ")}`);
+    }
+
+
     res.redirect("/dashboard");
   } catch (error) {
     res.status(500).send("Error submitting report");
