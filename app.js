@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 
 
-// Connect to MongoDB
+// Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGODB_URI, {
   connectTimeoutMS: 30000,
   socketTimeoutMS: 45000,
@@ -62,6 +62,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+
 // User Schema
 const userSchema = new mongoose.Schema({
   matricNumber: { type: String, unique: true, required: true },
@@ -101,7 +102,7 @@ userSchema.pre('save', async function (next) {
 const reportSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   description: { type: String, required: true },
-  category: { type: String, enum: ["Theft", "Assault", "Suspicious Activity", "Other"], default: "Other" },
+  category: { type: String, enum: ["Theft", "Assault", "Suspicious Activity", "Death", "Other"], default: "Other" },
   imageUrl: { type: String },
   status: { type: String, enum: ["Pending", "Addressed"], default: "Pending" },
   createdAt: { type: Date, default: Date.now },
@@ -523,62 +524,36 @@ app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res
     });
 
     await newReport.save();
+    
+    // ✅ Fetch Admin & Security Users
+    const adminSecurityUsers = await User.find({ role: { $in: ["admin", "security"] } });
+    const adminSecurityEmails = adminSecurityUsers.map(user => user.email);
 
+    if (adminSecurityEmails.length > 0) {
+      // ✅ Send email alert
+      const subject = "🚨 New Campus Security Incident Reported!";
+      const message = `
+        <h2>📢 A new incident has been reported!</h2>
+        <ul>
+          <li>🔹 <b>Category:</b> ${category}</li>
+          <li>🔹 <b>Description:</b> ${description}</li>
+          <li>🔹 <b>Status:</b> Pending</li>
+          ${imageUrl ? `<li>🖼️ <b>Image:</b> <a href="https://yourherokuapp.com${imageUrl}">View Image</a></li>` : ""}
+          <li>📅 <b>Time:</b> ${new Date().toLocaleString()}</li>
+        </ul>
+        <p>👉 <b>Login to view the report:</b> <a href="https://yourherokuapp.com/admin-dashboard">Admin Dashboard</a></p>
+      `;
 
-    app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res) => {
-      try {
-        const { description } = req.body;
-        const imageUrl = req.file ? "/images/uploads/" + req.file.filename : null;
-    
-        // Auto-categorize based on description
-        const category = categorizeIncident(description);
-    
-        // Save the new report
-        const newReport = new Report({
-          userId: req.session.userId,
-          description,
-          category,
-          imageUrl,
-        });
-    
-        await newReport.save();
-    
-        // ✅ Fetch Admin & Security Users
-        const adminSecurityUsers = await User.find({ role: { $in: ["admin", "security"] } });
-        const adminSecurityEmails = adminSecurityUsers.map(user => user.email);
-    
-        if (adminSecurityEmails.length > 0) {
-          // ✅ Send email alert
-          const subject = "🚨 New Campus Security Incident Reported!";
-          const message = `
-            <h2>📢 A new incident has been reported!</h2>
-            <ul>
-              <li>🔹 <b>Category:</b> ${category}</li>
-              <li>🔹 <b>Description:</b> ${description}</li>
-              <li>🔹 <b>Status:</b> Pending</li>
-              ${imageUrl ? `<li>🖼️ <b>Image:</b> <a href="https://yourherokuapp.com${imageUrl}">View Image</a></li>` : ""}
-              <li>📅 <b>Time:</b> ${new Date().toLocaleString()}</li>
-            </ul>
-            <p>👉 <b>Login to view the report:</b> <a href="https://yourherokuapp.com/admin-dashboard">Admin Dashboard</a></p>
-          `;
-    
-          await sendNotification(adminSecurityEmails.join(","), subject, message);
-          console.log(`📩 Alert sent to: ${adminSecurityEmails.join(", ")}`);
-        }
-    
-        res.redirect("/dashboard");
-      } catch (error) {
-        console.error("🚨 Error submitting report:", error);
-        res.status(500).send("Error submitting report");
-      }
-    });
-    
+      await sendNotification(adminSecurityEmails.join(","), subject, message);
+      console.log(`📩 Alert sent to: ${adminSecurityEmails.join(", ")}`);
+    }
 
     res.redirect("/dashboard");
   } catch (error) {
+    console.error("🚨 Error submitting report:", error);
     res.status(500).send("Error submitting report");
   }
-});
+    });
 
 
 
