@@ -551,7 +551,7 @@ app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res
           ${imageUrl ? `<li>🖼️ <b>Image:</b> <a href="https://protected-plains-66998-e992b16f7253.herokuapp.com/${imageUrl}">View Image</a></li>` : ""}
           <li>📅 <b>Time:</b> ${new Date().toLocaleString()}</li>
         </ul>
-        <p>👉 <b>Login to view the report:</b> <a href="https://protected-plains-66998-e992b16f7253.herokuapp.com//admin-dashboard">Admin Dashboard</a></p>
+        <p>👉 <b>Login to view the report:</b> <a href="https://protected-plains-66998-e992b16f7253.herokuapp.com/login">Admin Dashboard</a></p>
       `;
 
       await sendNotification(adminSecurityEmails.join(","), subject, message);
