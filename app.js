@@ -225,6 +225,7 @@ const transporter = nodemailer.createTransport({
 // Function to send notification emails
 const sendNotification = async (recipient, subject, message) => {
   try {
+    console.log(`📩 Attempting to send email to: ${recipient}`);
     await transporter.sendMail({
       from: `"Campus Security" <${process.env.EMAIL_USER}>`,
       to: recipient,
@@ -547,10 +548,10 @@ app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res
           <li>🔹 <b>Category:</b> ${category}</li>
           <li>🔹 <b>Description:</b> ${description}</li>
           <li>🔹 <b>Status:</b> Pending</li>
-          ${imageUrl ? `<li>🖼️ <b>Image:</b> <a href="https://yourherokuapp.com${imageUrl}">View Image</a></li>` : ""}
+          ${imageUrl ? `<li>🖼️ <b>Image:</b> <a href="https://protected-plains-66998-e992b16f7253.herokuapp.com/${imageUrl}">View Image</a></li>` : ""}
           <li>📅 <b>Time:</b> ${new Date().toLocaleString()}</li>
         </ul>
-        <p>👉 <b>Login to view the report:</b> <a href="https://yourherokuapp.com/admin-dashboard">Admin Dashboard</a></p>
+        <p>👉 <b>Login to view the report:</b> <a href="https://protected-plains-66998-e992b16f7253.herokuapp.com//admin-dashboard">Admin Dashboard</a></p>
       `;
 
       await sendNotification(adminSecurityEmails.join(","), subject, message);
