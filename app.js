@@ -229,7 +229,7 @@ const sendNotification = async (recipient, subject, message) => {
     await transporter.sendMail({
       from: `"Campus Security" <${process.env.EMAIL_USER}>`,
       to: recipient,
-      subject,
+      subject: subject,
       text: message.replace(/<\/?[^>]+(>|$)/g, ""), // Convert to plain text for compatibility
       html: message // Use HTML for better formatting
     });
