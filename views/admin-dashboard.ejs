@@ -69,7 +69,7 @@
           <p><strong>Category:</strong> <%= report.category %></p>
 
           <% if (report.imageUrl) { %>
-            <img src="<%= report.imageUrl %>" alt="Report Image" class="report-image">
+            <img src="<%= report.imageUrl %>" alt="Incident Image" class="report-image">
           <% } %>
 
           <p class="adminstatus <%= report.status === 'Pending' ? 'pending' : 'resolved' %>">
@@ -168,6 +168,8 @@
       }
     });
   });
+
+  
 </script>
 
 

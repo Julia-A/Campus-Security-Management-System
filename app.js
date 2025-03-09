@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const multer = require('multer');
 const bcrypt = require('bcryptjs');
 const nodemailer = require("nodemailer");
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 
 dotenv.config();
@@ -50,13 +52,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// Multer setup for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Cloudinary Storage Setup for Multer
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'incident-reports', // Cloudinary folder name
+    allowedFormats: ['jpg', 'png', 'jpeg']
   }
 });
 
@@ -521,7 +529,7 @@ app.get('/report', (req, res) => {
 app.post("/report", upload.single("image"), ensureAuthenticated, async (req, res) => {
   try {
     const { description } = req.body;
-    const imageUrl = req.file ? "/images/uploads/" + req.file.filename : null;
+    const imageUrl = req.file ? req.file.path : null; // Cloudinary returns `file.path`
     
     // Auto-categorize based on description
     const category = categorizeIncident(description);

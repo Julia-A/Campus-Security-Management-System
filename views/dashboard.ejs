@@ -24,7 +24,7 @@
             <p class="date card-text"><strong>Date:</strong> <%= report.createdAt.toLocaleString() %></p>
             <div class="card-text image-div">
               <% if (report.imageUrl) { %>
-                <img src="<%= report.imageUrl %>" alt="Report Image" class="">
+                <img src="<%= report.imageUrl %>" alt="Incident image" class="report-image">
               <% } %>
               
             </div>
@@ -73,6 +73,7 @@
   </main>
 
 </div>
+
 
 
 <!-- <%- include('partials/footer') %> -->
