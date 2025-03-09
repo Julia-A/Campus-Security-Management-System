@@ -1,9 +1,15 @@
 .main {
     padding: min(30px, 7%);
-    background-color: #9f99994b;
+    /* background-color: #9f99994b; */
     font-family: "Montserrat", serif;
     
 }
+
+body {
+    background-color: #9f99994b;
+}
+
+
 
 
 .main .welcome {
@@ -78,16 +84,22 @@
 }
 
 /* Image Styling */
-.report-card-inner-div img {
-    width: 80%;
+.report-card-inner-div .image-div {
+    /* width: 80%; */
+    max-width: 400px;
     height: auto;
     border-radius: 8px;
     object-fit: cover;
     /* margin-top: 10px; */
-    margin-inline: auto;
+    margin: auto;
 }
 
-.main .feedback-form {
+.report-card-inner-div .image-div img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.feedback-form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -97,13 +109,13 @@
     width: 100%;
 }
 
-.main .feedback-form label {
+.feedback-form label {
     font-weight: 700;
     text-align: center;
     margin-top: 1rem;
 }
 
-.main .feedback-form select {
+ .feedback-form select {
     border-radius: 8px;
     padding: 0.5rem;
     color: #fff;
@@ -112,8 +124,8 @@
 }
 
 /* Delete Button */
-.main .submit-feedback,
-.main .delete-incident-btn {
+ .submit-feedback,
+ .delete-incident-btn {
     background-color: red;
     color: white;
     padding: 0.8rem 1.6rem;
@@ -125,25 +137,27 @@
     transition: background 0.3s ease;
 }
 
-.main .submit-feedback {
+ .submit-feedback {
     background-color: #071D50;
 }
 
-.main .delete-incident-form,
-.main .delete-incident-btn {
+ .delete-incident-form,
+ .delete-incident-btn {
     /* width: 100%; */
     margin-inline: auto;
     margin-top: 1rem;
 }
 
 
-.main .submit-feedback:hover {
+ .submit-feedback:hover {
     background-color: #0b318a;
 }
 
-.main .delete-incident-btn:hover {
+ .delete-incident-btn:hover {
     background-color: darkred;
 }
+
+
 
 
 .no-reports-submitted {
@@ -151,14 +165,19 @@
     font-size: 2rem;
     font-weight: 500;
     margin-top: 2rem;
+    text-align: center;
 }
 /* Responsive Design */
 @media (max-width: 768px) {
+    .dashboard-body {
+        padding: 1rem;
+    }
+
     .report-card {
         grid-template-columns: 1fr; /* Stacks in one column */
     }
 
-    .main .welcome {
+     .welcome {
         text-align: center;
     }
 
@@ -169,10 +188,13 @@
 
     
 
-    .main .delete-incident-btn {
+     .delete-incident-btn {
         /* display: block; */
         /* width: 90%; */
         max-width: 200px;
         text-align: center;
+        padding: 0.6rem;
     }
+
+    
 }

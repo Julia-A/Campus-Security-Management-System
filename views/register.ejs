@@ -45,9 +45,10 @@
         <label class="">Email</label>
       </div>
       <!-- Password -->
-      <div class="input-wrap">
-        <input type="password" name="password" class="input" id="password" required>
-        <label class="">Password</label>
+      <div class="input-wrap password-container">
+        <input type="password" name="password" class="input" id="register-password" required>
+        <label for="register-password">Password</label>
+        <i class="bi bi-eye-slash toggle-password" data-target="register-password"></i>
       </div>
       <small class="">Password must have at least 8 characters, including uppercase, lowercase, number, and symbol.</small>
       <!-- Submit Button -->
@@ -76,5 +77,6 @@
     }
   });
 </script>
+
 
 <!-- <%- include('partials/footer') %> -->

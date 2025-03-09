@@ -604,8 +604,6 @@ app.post('/submit-feedback/:incidentId', ensureAuthenticated, async (req, res) =
 
 
 // Admin Dashboard - View All Reports
-
-
 app.get("/admin-dashboard", ensureAuthenticated, async (req, res) => {
   if (req.session.role !== "admin") {
     return res.status(403).send("Unauthorized");
@@ -613,8 +611,9 @@ app.get("/admin-dashboard", ensureAuthenticated, async (req, res) => {
 
   try {
     // Get all reports and populate with user matric numbers
-    const reports = await Report.find().populate("userId", "matricNumber")
-                    .select("description category status createdAt imageUrl deleted deletedAt");
+    const reports = await Report.find()
+      .populate("userId", "matricNumber")
+      .select("description category status createdAt imageUrl deleted deletedAt");
 
     // Count statistics
     const totalReports = await Report.countDocuments();
@@ -641,17 +640,43 @@ app.get("/admin-dashboard", ensureAuthenticated, async (req, res) => {
       { $sort: { _id: 1 } }
     ]);
 
-    // Reports per day (last 7 days)
-    const reportsPerDay = await Report.aggregate([
+    // Generate last 7 days (ensuring correct UTC time)
+    const daysArray = [...Array(7)].map((_, i) => {
+      const d = new Date();
+      d.setUTCDate(d.getUTCDate() - i);
+      d.setUTCHours(0, 0, 0, 0);
+      return d.toISOString().split("T")[0]; // Format YYYY-MM-DD
+    }).reverse(); // Ensure ascending order
+
+    // Reports per day (ensuring correct sorting)
+    const reportsData = await Report.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // Last 7 days
+          }
+        }
+      },
       {
         $group: {
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           count: { $sum: 1 }
         }
       },
-      { $sort: { _id: -1 } },
-      { $limit: 7 }
+      { $sort: { _id: 1 } }
     ]);
+
+    // Convert to a map for easy lookup
+    const reportsMap = reportsData.reduce((acc, item) => {
+      acc[item._id] = item.count;
+      return acc;
+    }, {});
+
+    // Fill missing days with 0
+    const reportsPerDay = daysArray.map(day => ({
+      _id: day,
+      count: reportsMap[day] || 0
+    }));
 
     // Feedback summary
     const feedbackOptions = ["Amazing", "Good", "Bad", "No Response", "Really Bad"];
@@ -665,18 +690,19 @@ app.get("/admin-dashboard", ensureAuthenticated, async (req, res) => {
         }
       }
     ]);
-    
+
     // Create a complete feedback summary (fill missing categories with 0)
     const feedbackMap = rawFeedbackSummary.reduce((acc, item) => {
       acc[item._id] = item.count;
       return acc;
     }, {});
-    
+
     const feedbackSummary = feedbackOptions.map(option => ({
       _id: option,
       count: feedbackMap[option] || 0
     }));
-    
+
+    console.log("Backend reportsPerDay data:", reportsPerDay);
 
     res.render("admin-dashboard", {
       user: req.session,

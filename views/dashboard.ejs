@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 
-<div class="body">
+<div class="body" id="dashboard-body">
   <%- include('partials/sidebar') %>
 
   <main class="main">
@@ -22,7 +22,7 @@
               </span>
             </p>
             <p class="date"><strong>Date:</strong> <%= report.createdAt.toLocaleString() %></p>
-            <div class="card-text">
+            <div class="card-text image-div">
               <% if (report.imageUrl) { %>
                 <img src="<%= report.imageUrl %>" alt="Report Image" class="">
               <% } %>
@@ -74,4 +74,5 @@
 
 </div>
 
-<%- include('partials/footer') %>
+
+<!-- <%- include('partials/footer') %> -->

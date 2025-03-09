@@ -15,6 +15,10 @@
 
 
 /* Report an Incident */
+
+.report-body {
+    background-color: #9f99994b;
+}
 .report-incident {
     display: flex;
     flex-direction: column;

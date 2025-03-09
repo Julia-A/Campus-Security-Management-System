@@ -25,6 +25,27 @@
 }
 
 
+/* 🔹 Password Input Field Styling */
+.password-container {
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #007bff;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .toggle-password:hover {
+    color: #0056b3;
+  }
+  
+
 @media(max-width: 800px) {
     .image-side {
         display: none;

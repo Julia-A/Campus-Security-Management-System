@@ -1,18 +1,18 @@
 <aside class="" id="sidebar">
   
   <ul class="">
-
+    
     <li class="logo-li">
-        <p class="nav-logo logo">CampusSecurity
-          <i class="bi bi-shield-shaded nav-logo-icon"></i>
-        </p>
-        
-
-        <button id="toggle-btn" onclick=toggleSidebar()>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M360-120v-720h80v720h-80Zm160-160v-400l200 200-200 200Z"/></svg>
-        </button>
+      <p class="nav-logo logo">CampusSecurity
+        <i class="bi bi-shield-shaded nav-logo-icon"></i>
+      </p>
+      
+      
+      <button id="toggle-btn" onclick=toggleSidebar()>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M360-120v-720h80v720h-80Zm160-160v-400l200 200-200 200Z"/></svg>
+      </button>
     </li>
-
+    
     <% if (user && user.role === 'student') { %>
       <li>
         <a href="/dashboard" class="active">
@@ -20,8 +20,26 @@
           <span>Home</span>
         </a>
       </li>
-    <% } %>
-
+      <% } %>
+      
+      <% if (user && user.role === 'admin') { %>
+        <li>
+          <a href="/admin-dashboard" class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+            <span>Home</span>
+          </a>
+        </li>
+      <% } %>
+      
+      <% if (user && user.role === 'security') { %>
+        <li>
+          <a href="/security-dashboard" class="active">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+            <span>Home</span>
+          </a>
+        </li>
+      <% } %>
+      
     <% if (user && user.role === 'student') { %>
       <li>
         <a href="/emergency-contacts" class="">
@@ -38,23 +56,6 @@
       </a>
     </li>
 
-    <% if (user && user.role === 'admin') { %>
-      <li>
-        <a href="/admin-dashboard" class="active">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
-          <span>Home</span>
-        </a>
-      </li>
-    <% } %>
-
-    <% if (user && user.role === 'security') { %>
-      <li>
-        <a href="/security-dashboard" class="active">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
-          <span>Home</span>
-        </a>
-      </li>
-    <% } %>
 
     <li>
       <a href="/logout" class="logout">

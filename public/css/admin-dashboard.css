@@ -1,0 +1,179 @@
+/* 🔹 Admin Dashboard Styling 🔹 */
+.admin-dashboard {
+    background-color: #0a192f; /* Dark Blue */
+    color: #ccd6f6; /* Light Blue Text */
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    /* padding: 20px; */
+  }
+  
+  /* 🔹 Main Content Container */
+  .dashboard-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  /* 🔹 Stats Cards */
+  .stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .stat-card {
+    flex: 1;
+    background: linear-gradient(145deg, #112240, #233554);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 255, 0.3);
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  
+  .stat-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .stat-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #64ffda;
+  }
+  
+  .stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* 🔹 Chart Styling */
+  .chart-container {
+    background: #112240;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  canvas {
+    max-width: 100%;
+    height: 300px !important;
+  }
+  
+  /* 🔹 Tables */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #112240;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .styled-table th,
+  .styled-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #233554;
+  }
+  
+  .styled-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .styled-table tbody tr:hover {
+    background: rgba(0, 123, 255, 0.2);
+  }
+  
+  /* 🔹 Feedback Summary */
+  .feedback-grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .feedback-card {
+    flex: 1;
+    padding: 15px;
+    background: #112240;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+  }
+  
+  .feedback-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #64ffda;
+  }
+  
+  .feedback-card p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* 🔹 Reports Grid */
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .report-card {
+    background: #112240;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+    color: white;
+  }
+  
+  .report-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  /* 🔹 Report Status Colors */
+  .status.pending {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status.resolved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .deleted-status.deleted {
+    color: red;
+    font-weight: bold;
+  }
+
+  .section-title {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+  }
+  
+  /* 🔹 Responsive Design */
+  @media screen and (max-width: 768px) {
+    .stats-container {
+      flex-direction: column;
+    }
+    
+    .feedback-grid {
+      flex-direction: column;
+    }
+  
+    .reports-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  

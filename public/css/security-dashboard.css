@@ -1,0 +1,129 @@
+/* Security Dashboard Table Container */
+.security-table-container {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal scrolling on smaller screens */
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    padding: 15px;
+}
+
+/* Security Dashboard Table */
+.security-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Ensures table doesn't shrink too much */
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Table Header */
+.security-table thead {
+    background-color: #071D50;
+    color: #fff;
+    text-align: left;
+}
+
+/* Header Cells */
+.security-table th {
+    padding: 12px 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Table Rows */
+.security-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.2s ease-in-out;
+}
+
+/* Alternating Row Colors */
+.security-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Hover Effect */
+.security-table tbody tr:hover {
+    background-color: #eef3ff;
+}
+
+/* Table Cells */
+.security-table td {
+    padding: 12px 16px;
+    color: #333;
+}
+
+/* Status Labels */
+.status {
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* Pending Status */
+.status.pending {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Addressed Status */
+.status.addressed {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Deleted Status */
+.status.deleted {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Dropdown Select */
+.status-select {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Update Button */
+.update-btn {
+    background-color: #071D50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease-in-out;
+}
+
+.update-btn:hover {
+    background-color: #0a2b80;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .security-table {
+        min-width: 100%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .security-table th, 
+    .security-table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

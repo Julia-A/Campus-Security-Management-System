@@ -1,73 +1,61 @@
 <%- include('partials/header') %>
 
-<div class="flex min-h-screen">
+<div class="body" id="security-body">
   <%- include('partials/sidebar') %>
 
-  <div class="flex-1 p-6 bg-gray-100">
-    <h1 class="text-3xl font-bold mb-4">Security Dashboard</h1>
+  <div class="main">
 
     <!-- 🔴 Real-Time Notifications Section -->
     <div id="notificationBox" class="p-4 bg-red-100 text-red-600 rounded mb-4 hidden">
       <strong>New Incident Reported:</strong> <span id="notificationText"></span>
     </div>
 
-    <table class="w-full border-collapse border border-gray-300 text-sm">
-      <thead class="bg-gray-200 text-gray-700">
-        <tr>
-          <th class="border p-2">Reporter Matric Number</th>
-          <th class="border p-2">Description</th>
-          <th class="border p-2">Category</th>
-          <th class="border p-2">Status</th>
-          <th class="border p-2">Deleted?</th>
-          <th class="border p-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% reports.forEach(report => { %>
-        <tr class="border hover:bg-gray-100 transition">
-          <!-- Display Matric Number -->
-          <td class="p-2">
-            <% if (report.userId && report.userId.matricNumber) { %>
-              <%= report.userId.matricNumber %>
-            <% } else { %>
-              <span class="text-red-500">N/A</span>
-            <% } %>
-          </td>
-
-          <!-- Incident Description -->
-          <td class="p-2"><%= report.description %></td>
-
-          <!-- Category -->
-          <td class="p-2"><%= report.category %></td>
-
-          <!-- Status -->
-          <td class="p-2"><%= report.status %></td>
-
-          <!-- Deleted Indicator -->
-          <td class="p-2">
-            <% if (report.deleted) { %>
-              <span class="text-red-500 font-bold">Yes (Deleted on <%= report.deletedAt.toLocaleString() %>)</span>
-            <% } else { %>
-              <span class="text-green-600">No</span>
-            <% } %>
-          </td>
-
-          <!-- Actions -->
-          <td class="p-2">
-            <form action="/security/report/<%= report._id %>/status" method="POST">
-              <select name="status" class="border p-1 rounded">
-                <option value="Pending" <%= report.status === "Pending" ? "selected" : "" %>>Pending</option>
-                <option value="Addressed" <%= report.status === "Addressed" ? "selected" : "" %>>Addressed</option>
-              </select>
-              <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">
-                Update
-              </button>
-            </form>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
+    <div class="security-table-container">
+      <table class="security-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Matric No</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% reports.forEach((report, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= report.userId.matricNumber %></td>
+              <td><%= report.description %></td>
+              <td><%= report.category %></td>
+              <td>
+                <span class="status <%= report.deleted ? 'deleted' : report.status.toLowerCase() %>">
+                  <%= report.deleted ? 'Deleted' : report.status %>
+                </span>
+              </td>
+              <td><%= new Date(report.createdAt).toLocaleDateString() %></td>
+              <td>
+                <% if (!report.deleted) { %>
+                  <form action="/security/report/<%= report._id %>/status" method="POST">
+                    <select name="status" class="status-select">
+                      <option value="Pending" <%= report.status === "Pending" ? "selected" : "" %>>Pending</option>
+                      <option value="Addressed" <%= report.status === "Addressed" ? "selected" : "" %>>Addressed</option>
+                    </select>
+                    <button type="submit" class="update-btn">Update</button>
+                  </form>
+                <% } else { %>
+                  <em>Deleted</em>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    
+    
   </div>
 </div>
 
@@ -75,4 +63,22 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/socket.js"></script>
 
-<%- include('partials/footer') %>
+<script>
+  function handleSecurityBodyClassRemoval() {
+    const body = document.getElementById("security-body");
+
+    if (window.matchMedia("(max-width: 800px)").matches) {
+      body.classList.remove("body"); // Remove 'close' class in mobile view
+    } else {
+      body.classList.add("body"); // Add 'close' class in desktop view
+    }
+  }
+
+  // Run on page load
+  handleSecurityBodyClassRemoval();
+
+  // Listen for screen resize changes
+  window.addEventListener("resize", handleSecurityBodyClassRemoval);
+</script>
+
+<!-- <%- include('partials/footer') %> -->
