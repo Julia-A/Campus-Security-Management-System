@@ -72,8 +72,8 @@
             <img src="<%= report.imageUrl %>" alt="Report Image" class="report-image">
           <% } %>
 
-          <p class="status <%= report.status === 'Pending' ? 'pending' : 'resolved' %>">
-            Status: <%= report.status %>
+          <p class="adminstatus <%= report.status === 'Pending' ? 'pending' : 'resolved' %>">
+            <span>Status:</span> <%= report.status %>
           </p>
 
           <p class="report-date"><%= report.createdAt.toLocaleString() %></p>

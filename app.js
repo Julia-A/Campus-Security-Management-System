@@ -280,7 +280,7 @@ app.post('/login', async (req, res) => {
     if (!user) {
       const errorMsg = `🚨 User not found: ${matricNumber}\n`;
       fs.appendFileSync('error.log', errorMsg);
-      return res.status(400).send("User not found. Please check your login details.");
+      return res.status(400).render("message", { message: "User not found. Please check your login details and try again." });
     }
 
     // Check password
@@ -288,7 +288,7 @@ app.post('/login', async (req, res) => {
     if (!passwordMatch) {
       const errorMsg = `🚨 Incorrect password attempt for: ${matricNumber}\n`;
       fs.appendFileSync('error.log', errorMsg);
-      return res.status(400).send("Incorrect password. Please try again.");
+      return res.status(400).render("message", { message: "Incorrect password. Please try again." });
     }
 
     // Set session
@@ -310,7 +310,7 @@ app.post('/login', async (req, res) => {
   } catch (error) {
     const errorMsg = `🚨 Login Error: ${error.message}\n`;
     fs.appendFileSync('error.log', errorMsg);
-    res.status(500).send("Server error during login.");
+    res.status(500).render("message",{ message: "Server error during login."});
   }
 });
 
@@ -329,7 +329,7 @@ app.post('/forgot-password', async (req, res) => {
   try {
     const user = await User.findOne({ matricNumber });
     if (!user) {
-      return res.status(400).send("User not found.");
+      return res.status(400).render("message",{message: "User not found."});
     }
 
     // Generate reset token
@@ -346,7 +346,7 @@ app.post('/forgot-password', async (req, res) => {
 
     await sendNotification(user.email, subject, message);
 
-    res.send(`Password reset link sent to ${user.email}`);
+    res.render("message", { message: `Password reset link sent to ${user.email}. Check your inbox for further instructions.` });
   } catch (error) {
     console.error("Error handling password reset request:", error);
     res.status(500).send("Server error.");
@@ -392,7 +392,7 @@ app.post('/reset-password/:token', async (req, res) => {
     // Delete the token after use
     await PasswordResetToken.deleteOne({ _id: resetToken._id });
 
-    res.send("Password has been reset. You can now log in with your new password.");
+    res.render("message", { message: "✅ Password has been reset successfully! You can now log in with your new password." });
   } catch (error) {
     console.error("Error resetting password:", error);
     res.status(500).send("Server error.");
@@ -582,7 +582,7 @@ app.post('/submit-feedback/:incidentId', ensureAuthenticated, async (req, res) =
     // Check if feedback already exists
     const existingFeedback = await Feedback.findOne({ incidentId, userId: req.session.userId });
     if (existingFeedback) {
-      return res.status(400).send("You have already submitted feedback for this incident.");
+      return res.status(400).render("message", { message: "You have already submitted feedback for this incident. Thank you!" });
     }
 
     // Save new feedback

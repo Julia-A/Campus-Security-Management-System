@@ -2,7 +2,6 @@
 .admin-dashboard {
     background-color: #0a192f; /* Dark Blue */
     color: #ccd6f6; /* Light Blue Text */
-    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     /* padding: 20px; */
   }
@@ -142,12 +141,16 @@
   }
   
   /* 🔹 Report Status Colors */
-  .status.pending {
+  .adminstatus span {
+    color: #fff;
+  }
+
+  .adminstatus.pending {
     color: orange;
     font-weight: bold;
   }
   
-  .status.resolved {
+  .adminstatus.resolved {
     color: green;
     font-weight: bold;
   }

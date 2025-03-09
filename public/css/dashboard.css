@@ -70,7 +70,16 @@ body {
     color: #333;
 }
 
+.report-card-inner-div .card-text,
+.submit-feedback-title {
+    color: #333;
+}
+
 /* Status Text Color */
+.report-card-inner-div .status {
+    padding: 0;
+}
+
 .text-red-500 {
     color: red;
 }

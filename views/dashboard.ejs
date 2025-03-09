@@ -16,12 +16,12 @@
               <p class="description"><strong>Description: </strong><%= report.description %></p>
               <p class="category"><strong>Category:</strong> <%= report.category %></p>
             </div>
-            <p class="status"><strong>Status: </strong>
+            <p class="status "><strong class="card-text">Status: </strong>
               <span class="<%= report.status === 'Pending' ? 'text-red-500' : 'text-green-500' %> font-semibold">
                 <%= report.status %>
               </span>
             </p>
-            <p class="date"><strong>Date:</strong> <%= report.createdAt.toLocaleString() %></p>
+            <p class="date card-text"><strong>Date:</strong> <%= report.createdAt.toLocaleString() %></p>
             <div class="card-text image-div">
               <% if (report.imageUrl) { %>
                 <img src="<%= report.imageUrl %>" alt="Report Image" class="">
@@ -32,7 +32,7 @@
              <!-- Feedback Section (only if addressed) -->
             <% if (report.status === "Addressed") { %>
               <form action="/submit-feedback/<%= report._id %>" method="POST" class="feedback-form">
-                <label for="feedback" class="">SUBMIT FEEDBACK</label>
+                <label for="feedback" class="submit-feedback-title">SUBMIT FEEDBACK</label>
                 <select name="feedback" id="feedback" class="" required>
                   <option value="">-- Select Feedback --</option>
                   <option value="Good">Good</option>
