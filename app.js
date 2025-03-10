@@ -122,7 +122,10 @@ const reportSchema = new mongoose.Schema({
   category: { type: String, enum: ["Theft", "Assault", "Suspicious Activity", "Death", "Other"], default: "Other" },
   imageUrl: { type: String },
   status: { type: String, enum: ["Pending", "Addressed"], default: "Pending" },
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { 
+    type: Date, 
+    default: () => new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" })
+  },
   deleted: { type: Boolean, default: false },  // NEW FIELD
   deletedAt: { type: Date, default: null }     // NEW FIELD
 });
@@ -221,6 +224,7 @@ const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: parseInt(process.env.EMAIL_PORT),
   secure: false,
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS

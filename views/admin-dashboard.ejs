@@ -76,7 +76,9 @@
             <span>Status:</span> <%= report.status %>
           </p>
 
-          <p class="report-date"><%= report.createdAt.toLocaleString() %></p>
+          <p class="report-date">
+            <%= new Date(report.createdAt).toLocaleString("en-US", { timeZone: "Africa/Lagos" }) %>
+          </p>
 
           <p class="deleted-status <%= report.deleted ? 'deleted' : '' %>">
             <% if (report.deleted) { %>

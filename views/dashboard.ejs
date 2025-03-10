@@ -21,7 +21,9 @@
                 <%= report.status %>
               </span>
             </p>
-            <p class="date card-text"><strong>Date:</strong> <%= report.createdAt.toLocaleString() %></p>
+            <p class="date card-text"><strong>Date:</strong>
+              <%= new Date(report.createdAt).toLocaleString("en-US", { timeZone: "Africa/Lagos" }) %>
+            </p>
             <div class="card-text image-div">
               <% if (report.imageUrl) { %>
                 <img src="<%= report.imageUrl %>" alt="Incident image" class="report-image">
