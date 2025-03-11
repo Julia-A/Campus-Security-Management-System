@@ -38,6 +38,7 @@ body {
   .nav-logo {
     font-size: 1.5rem;
     font-weight: bold;
+    
     color: #fff;
     text-decoration: none;
     display: flex;
@@ -126,7 +127,7 @@ body {
   
   .register {
     background: #071D50;
-    border: none;
+    border: 2px solid #fff;
     color: #fff;
   }
   

@@ -17,6 +17,7 @@
     transition: 300ms ease-in-out;
     overflow: hidden;
     text-wrap: nowrap;
+    z-index: 10000000000000000000;
 }
 
 #sidebar.close {

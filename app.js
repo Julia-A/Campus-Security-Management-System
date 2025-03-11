@@ -613,6 +613,10 @@ app.post('/submit-feedback/:incidentId', ensureAuthenticated, async (req, res) =
   }
 });
 
+//  Safe Zone Route
+app.get("/safe-zone", ensureAuthenticated, (req, res) => {
+  res.render("safe-zone");
+});
 
 
 

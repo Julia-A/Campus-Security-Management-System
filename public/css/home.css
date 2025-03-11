@@ -3,7 +3,7 @@
   
   .hero {
     /* min-height: 100vh; */
-    background: linear-gradient(180deg, rgba(102, 100, 100, 0.774), rgba(11, 10, 83, 0.473)), url("/images/hero-img.png");
+    background:  url("/images/hero-img.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -14,21 +14,27 @@
     
     }
 
+    .babcock-logo {
+      width: 200px;
+      margin-inline: auto;
+    }
+
     .hero-text {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 2rem;
-        margin-top: 8rem;    
+        gap: 1rem;
+        margin-top: 5rem;    
     }
 
 
     .hero-text h1 {
-        font-size: 4rem;
-        background: linear-gradient(to right,#1042B6, #071D50, #3463CF);
+        font-size: 3rem;
+        background: linear-gradient(to right, #020266, #FF9801, #020266);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         font-weight: 800;
         text-align: center;
     }
@@ -57,11 +63,11 @@
         border-radius: 25px;
         font-size: 1rem;
         font-weight: 500;
-        border: 2px solid #071D50;
-        background: transparent;
-        color: white;
         cursor: pointer;
         transition: 0.3s ease-in-out;
+        background: #071D50;
+        border: 2px solid #fff;
+        color: #fff;
       }
 
     .hero-btn:hover {
@@ -87,7 +93,7 @@
     }
     
     .custom-shape-divider-bottom-1740425584 .shape-fill {
-        fill: #3462cfb6;
+        fill: #fff;
     }
 
 

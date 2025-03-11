@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<div class="body">
+    <!-- Sidebar -->
+  <%- include('partials/sidebar') %>
+    <div class="main safe-zone-container">
+      <h1>🚨 Safe Zones & Emergency Routes</h1>
+      <p>Find the nearest emergency shelter or security office.</p>
+    
+      <div id="map"></div>
+      <button id="find-route">Find Safe Route</button>
+    </div>
+</div>
+
+<!-- Leaflet Map Library -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+<!-- Custom JS -->
+<script src="/js/safe-zones.js"></script>
+
+<!-- <%- include('partials/footer') %> -->
