@@ -31,7 +31,7 @@
 
     .hero-text h1 {
         font-size: 3rem;
-        background: linear-gradient(to right, #020266, #FF9801, #020266);
+        background: linear-gradient(to right, #000, #FF9801, #000);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -50,7 +50,7 @@
 
     @media(max-width:400px) {
         .hero-text h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
 
         .hero-text p {
@@ -100,6 +100,14 @@
 
 
     @media(max-width: 800px) {
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .babcock-logo {
+        width: 100px;
+      }
+
     .custom-shape-divider-bottom-1740425584 {
         position: absolute;
         bottom: 0;
