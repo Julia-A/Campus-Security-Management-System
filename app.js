@@ -32,6 +32,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 
+
+
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -121,7 +123,7 @@ const reportSchema = new mongoose.Schema({
   description: { type: String, required: true },
   category: { type: String, enum: ["Theft", "Assault", "Suspicious Activity", "Death", "Other"], default: "Other" },
   imageUrl: { type: String },
-  status: { type: String, enum: ["Pending", "Addressed"], default: "Pending" },
+  status: { type: String, enum: ["Pending", "In Progress", "Addressed"], default: "Pending" },
   createdAt: { 
     type: Date, 
     default: () => new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" })
@@ -139,7 +141,7 @@ const feedbackSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   feedback: { 
     type: String, 
-    enum: ["Good", "Amazing", "Bad", "No Response", "Really Bad"], 
+    enum: ["Satisfied", "Neutral", "Dissatisfied", "Unresolved", "Needs Improvement"], 
     required: true 
   },
   createdAt: { type: Date, default: Date.now }
@@ -589,7 +591,7 @@ app.post('/submit-feedback/:incidentId', ensureAuthenticated, async (req, res) =
     // Check if the report is addressed
     const report = await Report.findById(incidentId);
     if (!report || report.status !== "Addressed") {
-      return res.status(400).send("You can only give feedback for addressed incidents.");
+      return res.status(400).render("message", {message: "You can only give feedback for addressed incidents." });
     }
 
     // Check if feedback already exists
@@ -696,7 +698,7 @@ app.get("/admin-dashboard", ensureAuthenticated, async (req, res) => {
     }));
 
     // Feedback summary
-    const feedbackOptions = ["Amazing", "Good", "Bad", "No Response", "Really Bad"];
+    const feedbackOptions = ["Satisfied", "Neutral", "Dissatisfied", "Unresolved", "Needs Improvement"];
 
     // Fetch existing feedback counts
     const rawFeedbackSummary = await Feedback.aggregate([
@@ -763,9 +765,37 @@ app.post("/security/report/:id/status", ensureAuthenticated, async (req, res) =>
 
   try {
     const { status } = req.body;
-    await Report.findByIdAndUpdate(req.params.id, { status });
+    const report = await Report.findById(req.params.id).populate('userId'); // Populate userId to get user email
+
+    if (!report) {
+      return res.status(404).send("Report not found");
+    }
+
+    // Update the status of the report
+    report.status = status;
+    await report.save();
+
+    // Send email notification to the user
+    const user = report.userId;
+    const subject = `Your Incident Report Status has been updated`;
+    const message = `
+      Hello ${user.firstName},<br><br>
+      The status of your report has been updated to <b>${status}</b>.<br><br>
+      Description: ${report.description}<br>
+      Category: ${report.category}<br>
+      Status: ${status}<br>
+      Time: ${new Date(report.createdAt).toLocaleString()}<br><br>
+      Thank you for your report.<br><br>
+      Regards,<br>
+      Campus Security Team
+    `;
+
+    await sendNotification(user.email, subject, message);
+
     res.redirect("/security-dashboard");
+
   } catch (error) {
+    console.error("Error updating report status:", error);
     res.status(500).send("Error updating report status");
   }
 });

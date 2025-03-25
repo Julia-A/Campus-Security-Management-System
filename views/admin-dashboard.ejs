@@ -72,7 +72,9 @@
             <img src="<%= report.imageUrl %>" alt="Incident Image" class="report-image">
           <% } %>
 
-          <p class="adminstatus <%= report.status === 'Pending' ? 'pending' : 'resolved' %>">
+          <p class="adminstatus 
+            <%= report.status === 'Pending' ? 'pending' : 
+                report.status === 'In Progress' ? 'in-progress' : 'addressed' %>">
             <span>Status:</span> <%= report.status %>
           </p>
 

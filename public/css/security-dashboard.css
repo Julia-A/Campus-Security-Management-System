@@ -67,8 +67,8 @@
 
 /* Pending Status */
 .status.pending {
-    background: #fff3cd;
-    color: #856404;
+    background: rgba(255, 0, 0, 0.288);
+    color: rgba(255, 0, 0, 0.781);
     border: 1px solid #ffeeba;
 }
 
@@ -78,6 +78,14 @@
     color: #155724;
     border: 1px solid #c3e6cb;
 }
+
+/* In Progress Status */
+.status.in-progress {
+    background: rgba(255, 165, 0, 0.288); /* Light orange background */
+    color: rgba(255, 165, 0, 0.781); /* Orange text color */
+    border: 1px solid #ffa500; /* Orange border */
+}
+
 
 /* Deleted Status */
 .status.deleted {

@@ -146,12 +146,17 @@
   }
 
   .adminstatus.pending {
-    color: orange;
+    color: orangered;
     font-weight: bold;
   }
   
-  .adminstatus.resolved {
+  .adminstatus.addressed {
     color: green;
+    font-weight: bold;
+  }
+
+  .adminstatus.in-progress {
+    color: orange;
     font-weight: bold;
   }
   

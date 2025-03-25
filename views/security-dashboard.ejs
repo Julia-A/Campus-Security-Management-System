@@ -31,7 +31,7 @@
               <td><%= report.description %></td>
               <td><%= report.category %></td>
               <td>
-                <span class="status <%= report.deleted ? 'deleted' : report.status.toLowerCase() %>">
+                <span class="status <%= report.deleted ? 'deleted' : (report.status === 'In Progress' ? 'in-progress' : report.status.toLowerCase()) %>">
                   <%= report.deleted ? 'Deleted' : report.status %>
                 </span>
               </td>
@@ -41,6 +41,7 @@
                   <form action="/security/report/<%= report._id %>/status" method="POST">
                     <select name="status" class="status-select">
                       <option value="Pending" <%= report.status === "Pending" ? "selected" : "" %>>Pending</option>
+                      <option value="In Progress" <%= report.status === "In Progress" ? "selected" : "" %>>In Progress</option>
                       <option value="Addressed" <%= report.status === "Addressed" ? "selected" : "" %>>Addressed</option>
                     </select>
                     <button type="submit" class="update-btn">Update</button>

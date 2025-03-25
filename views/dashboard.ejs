@@ -17,7 +17,10 @@
               <p class="category"><strong>Category:</strong> <%= report.category %></p>
             </div>
             <p class="status "><strong class="card-text">Status: </strong>
-              <span class="<%= report.status === 'Pending' ? 'text-red-500' : 'text-green-500' %> font-semibold">
+              <span class="
+                <%= report.status === 'Pending' ? 'text-red-500' : 
+                    report.status === 'In Progress' ? 'text-yellow-500' : 
+                    'text-green-500' %> font-semibold">
                 <%= report.status %>
               </span>
             </p>
@@ -35,13 +38,13 @@
             <% if (report.status === "Addressed") { %>
               <form action="/submit-feedback/<%= report._id %>" method="POST" class="feedback-form">
                 <label for="feedback" class="submit-feedback-title">SUBMIT FEEDBACK</label>
-                <select name="feedback" id="feedback" class="" required>
+                <select name="feedback" id="feedback" class="feedback-select" required>
                   <option value="">-- Select Feedback --</option>
-                  <option value="Good">Good</option>
-                  <option value="Amazing">Amazing</option>
-                  <option value="Bad">Bad</option>
-                  <option value="No Response">No Response</option>
-                  <option value="Really Bad">Really Bad</option>
+                  <option value="Satisfied">Satisfied</option>
+                  <option value="Neutral">Neutral</option>
+                  <option value="Dissatisfied">Dissatisfied</option>
+                  <option value="Unresolved">Unresolved</option>
+                  <option value="Needs Improvement">Needs Improvement</option>
                 </select>
                 
                 <button type="submit" class="submit-feedback">
